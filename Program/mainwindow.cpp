@@ -59,12 +59,12 @@ void MainWindow::on_pushButton_clicked() // Кнопка Анализ
     if (temper[89] > 37) {f = true; QMessageBox::critical(this, "Температура > 37°C", "Высок шанс гибели расплода. Необходимо убрать утепление.");}
     if (temper[89] < 8)  {f = true; QMessageBox::critical(this, "Температура < 8°C", "Высок шанс гибели пчёл. Необходимо установить утепление.");}
 
-    if (vlazhn[89] < 70) {f = true; QMessageBox::critical(this, "Влажность в улье <70%", "Слишком сухо: это мешает развитию расплода! Обеспечьте пчёл источником воды.");}
-    if (vlazhn[89] < 98 && vlazhn[89] >= 70 ) {f = true; QMessageBox::warning(this, "Влажность в улье <98%", "Высок риск возникновения плесени. Необходимо проветривание: уберите утепление.");}
+    if (vlazhn[89] < 70) {f = true; QMessageBox::critical(this, "Влажность в улье < 70%", "Слишком сухо: это мешает развитию расплода! Обеспечьте пчёл источником воды.");}
+    if (vlazhn[89] > 98) {f = true; QMessageBox::warning(this, "Влажность в улье > 98%", "Высок риск возникновения плесени. Необходимо проветривание: уберите утепление.");}
 
-    if (prives[89] > 47) {f = true; QMessageBox::warning(this, "Улей переполнен", "Необходимо поменять рамки, убрать мёд");}
+    if (prives[89] > 47000) {f = true; QMessageBox::warning(this, "Улей переполнен", "Необходимо поменять рамки, убрать мёд");}
     if (prives[89] < prives[88]) {f = true; QMessageBox::warning(this, "Вес улья уменьшился", "Необходимо проверить состояние улья.");}
-    if (!f) {QMessageBox::information(this, "Information", "Нарушений нет");}
+    if (!f) {QMessageBox::information(this, "Information", "Показатели в норме. Действий никаких не требуется.");}
 }
 
 

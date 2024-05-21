@@ -174,11 +174,11 @@
       <x>860</x>
       <y>10</y>
       <width>47</width>
-      <height>13</height>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>КГ</string>
+     <string>грамм</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_8">
