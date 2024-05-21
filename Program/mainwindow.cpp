@@ -34,13 +34,13 @@ MainWindow::MainWindow(QWidget *parent)
     QString a = QDateTime::currentDateTime().toString("dd");
     //dates[0] = a.toInt() - 100;
 
+//    dates[0] = -100
 
 
 
-
-   // for(int i = 1; i < 100 ;i++){
-    //    dates[i] = dates[0] + i;
-  //  }
+//    for(int i = 1; i < 100 ;i++){
+//        dates[i] = dates[0] + i;
+//    }
     int sd = 0;
     for(int i = 99; i>0; i--){
         dates[i]=sd;
@@ -63,14 +63,14 @@ void MainWindow::createVectors(){
 
 void MainWindow::on_pushButton_clicked() // Кнопка Анализ
 {
-    if (temper[89] > 37) {f = true; QMessageBox::critical(this, "Температура > 37°C", "Высок шанс гибели расплода. Необходимо убрать утепление.");}
-    if (temper[89] < 8)  {f = true; QMessageBox::critical(this, "Температура < 8°C", "Высок шанс гибели пчёл. Необходимо установить утепление.");}
+    if (temper[99] > 37) {f = true; QMessageBox::critical(this, "Температура > 37°C", "Высок шанс гибели расплода. Необходимо убрать утепление.");}
+    if (temper[99] < 8)  {f = true; QMessageBox::critical(this, "Температура < 8°C", "Высок шанс гибели пчёл. Необходимо установить утепление.");}
 
-    if (vlazhn[89] < 70) {f = true; QMessageBox::critical(this, "Влажность в улье < 70%", "Слишком сухо: это мешает развитию расплода! Обеспечьте пчёл источником воды.");}
-    if (vlazhn[89] > 98) {f = true; QMessageBox::warning(this, "Влажность в улье > 98%", "Высок риск возникновения плесени. Необходимо проветривание: уберите утепление.");}
+    if (vlazhn[99] < 70) {f = true; QMessageBox::critical(this, "Влажность в улье < 70%", "Слишком сухо: это мешает развитию расплода! Обеспечьте пчёл источником воды.");}
+    if (vlazhn[99] > 98) {f = true; QMessageBox::warning(this, "Влажность в улье > 98%", "Высок риск возникновения плесени. Необходимо проветривание: уберите утепление.");}
 
-    if (prives[89] > 47000) {f = true; QMessageBox::warning(this, "Улей переполнен", "Необходимо поменять рамки, убрать мёд");}
-    if (prives[89] < prives[88]) {f = true; QMessageBox::warning(this, "Вес улья уменьшился", "Необходимо проверить состояние улья.");}
+    if (prives[99] > 47000) {f = true; QMessageBox::warning(this, "Улей переполнен", "Необходимо поменять рамки, убрать мёд");}
+    if (prives[99] < prives[98]) {f = true; QMessageBox::warning(this, "Вес улья уменьшился", "Необходимо проверить состояние улья.");}
     if (!f) {QMessageBox::information(this, "Information", "Показатели в норме. Действий никаких не требуется.");}
 }
 
@@ -132,7 +132,7 @@ void MainWindow::diff(int a){
     ui->widget->graph(0)->addData(dates1, temper1);
     ui->widget->replot();
 
-    ui->widget_2->xAxis->setRange(dates1[0] - 1, dates1[a - 1] + 1);
+    ui->widget_2->xAxis->setRange(dates1[0] - 2, dates1[a - 1] + 1);
     ui->widget_2->yAxis->setRange(vmin-5, vmax+5);
     ui->widget_2->addGraph();
     ui->widget_2->graph(0)->addData(dates1, vlazhn1);
