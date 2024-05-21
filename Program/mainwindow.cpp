@@ -11,69 +11,39 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    createVectors();
-
     ui->setupUi(this);
     QTimer* timer = new QTimer(this);
     timer->start(1000);
     connect(timer, SIGNAL(timeout()), this, SLOT(ontimeout()));
 
-
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    ///
-
-
-
-    for(int i = 0; i<100; i++){
-        dates.push_back(0);
+    for(int i = 1; i<=100; i++){
+        dates.push_back(i - 100);
+        temper.push_back(30 + (rand()%20 - 10));
+        vlazhn.push_back(60 + rand()%40);
+    }
+    prives.push_back(32);
+    for(int i = 0; i<99; i++){
+        prives.push_back(prives.back() + rand()%10*0.141);
     }
 
-
-
-
-    QString a = QDateTime::currentDateTime().toString("dd");
-    //dates[0] = a.toInt() - 100;
-
-//    dates[0] = -100
-
-
-
-//    for(int i = 1; i < 100 ;i++){
-//        dates[i] = dates[0] + i;
-//    }
-    int sd = 0;
-    for(int i = 99; i>0; i--){
-        dates[i]=sd;
-        sd--;
-    }
-
+///////////////////////////////////////////////////
     diff(10);
+///////////////////////////////////////////////////
 
-}
-
-void MainWindow::createVectors(){
-    QSqlQuery query("SELECT * FROM dt LIMIT 100" );
-    while(query.next()){
-        this->temper.push_front(query.value(3).toDouble());
-        this->vlazhn.push_front(query.value(2).toDouble());
-        this->prives.push_front(query.value(1).toDouble());
-//        for (int i = 0; i > 9 ; i++ ) query.next();
-    }
 }
 
 void MainWindow::on_pushButton_clicked() // Кнопка Анализ
 {
     if (temper[99] > 37) {f = true; QMessageBox::critical(this, "Температура > 37°C", "Высок шанс гибели расплода. Необходимо убрать утепление.");}
-    if (temper[99] < 8)  {f = true; QMessageBox::critical(this, "Температура < 8°C", "Высок шанс гибели пчёл. Необходимо установить утепление.");}
+    if (temper[89] < 8)  {f = true; QMessageBox::critical(this, "Температура < 8°C", "Высок шанс гибели пчёл. Необходимо установить утепление.");}
 
-    if (vlazhn[99] < 70) {f = true; QMessageBox::critical(this, "Влажность в улье < 70%", "Слишком сухо: это мешает развитию расплода! Обеспечьте пчёл источником воды.");}
-    if (vlazhn[99] > 98) {f = true; QMessageBox::warning(this, "Влажность в улье > 98%", "Высок риск возникновения плесени. Необходимо проветривание: уберите утепление.");}
+    if (vlazhn[99] < 70) {f = true; QMessageBox::critical(this, "Влажность в улье <70%", "Слишком сухо: это мешает развитию расплода! Обеспечьте пчёл источником воды.");}
+    if (vlazhn[99] > 98) {f = true; QMessageBox::warning(this, "Влажность в улье <98%", "Высок риск возникновения плесени. Необходимо проветривание: уберите утепление.");}
 
-    if (prives[99] > 47000) {f = true; QMessageBox::warning(this, "Улей переполнен", "Необходимо поменять рамки, убрать мёд");}
+    if (prives[99] > 47) {f = true; QMessageBox::warning(this, "Улей переполнен", "Необходимо поменять рамки, убрать мёд");}
     if (prives[99] < prives[98]) {f = true; QMessageBox::warning(this, "Вес улья уменьшился", "Необходимо проверить состояние улья.");}
-    if (!f) {QMessageBox::information(this, "Information", "Показатели в норме. Действий никаких не требуется.");}
+    if (!f) {QMessageBox::information(this, "Information", "Нарушений нет");}
 }
-
 
 MainWindow::~MainWindow()
 {
@@ -94,7 +64,7 @@ void MainWindow::diff(int a){
     pmin = prives[99];
     pmax = prives[99];
 
-    for(int i = 0; i<a; i++){
+    for(int i = 0; i < a; i++){
         if (temper[99 - a + i] > tmax) { tmax = temper[99 - a + i]; }
         if (temper[99 - a + i] < tmin) { tmin = temper[99 - a + i]; }
         if (vlazhn[99 - a + i] > vmax) { vmax = vlazhn[99 - a + i]; }
@@ -104,22 +74,16 @@ void MainWindow::diff(int a){
     }
     if (vmax > 95) {vmax = 95;}
 
-
     dates1.clear();
     temper1.clear();
     vlazhn1.clear();
     prives1.clear();
-    for(int i = 0; i<a; i++){
-        dates1.push_back(0);
-        prives1.push_back(0);
-        vlazhn1.push_back(0);
-        temper1.push_back(0);
-    }
-    for(int i = 0; i<a; i++){
-        temper1[i] = (temper[99 - a + i]);
-        vlazhn1[i] = (vlazhn[99 - a + i]);
-        prives1[i] = (prives[99 - a + i]);
-        dates1[i] = (dates[100 - a + i]);
+
+    for (int i = 0; i < a; i++){
+        temper1.push_front(temper[99 - i]);
+        vlazhn1.push_front(vlazhn[99 - i]);
+        prives1.push_front(prives[99 - i]);
+        dates1.push_front(dates[99 - i]);
     }
 
     ui->widget->clearPlottables();
@@ -132,7 +96,7 @@ void MainWindow::diff(int a){
     ui->widget->graph(0)->addData(dates1, temper1);
     ui->widget->replot();
 
-    ui->widget_2->xAxis->setRange(dates1[0] - 2, dates1[a - 1] + 1);
+    ui->widget_2->xAxis->setRange(dates1[0] - 1, dates1[a - 1] + 1);
     ui->widget_2->yAxis->setRange(vmin-5, vmax+5);
     ui->widget_2->addGraph();
     ui->widget_2->graph(0)->addData(dates1, vlazhn1);
