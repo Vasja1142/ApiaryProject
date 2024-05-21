@@ -19,6 +19,9 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(249, 240, 107)</string>
+   </property>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -55,6 +58,10 @@
      <font>
       <pointsize>8</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(255, 255, 255);
+color:rgb(0, 0, 0)</string>
     </property>
    </widget>
    <widget class="QCustomPlot" name="widget" native="true">
@@ -95,9 +102,6 @@
       <width>75</width>
       <height>23</height>
      </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color:rgb(255, 234, 241)</string>
     </property>
     <property name="text">
      <string>Analyse</string>
@@ -220,19 +224,6 @@
      <string>число</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_13">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>410</y>
-      <width>47</width>
-      <height>13</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
@@ -298,6 +289,19 @@
      <string>За 90 дней</string>
     </property>
    </widget>
+   <widget class="QWidget" name="widget_4" native="true">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>459</y>
+      <width>341</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255)</string>
+    </property>
+   </widget>
    <zorder>label_8</zorder>
    <zorder>label_9</zorder>
    <zorder>label_10</zorder>
@@ -312,13 +316,13 @@
    <zorder>label_4</zorder>
    <zorder>pushButton</zorder>
    <zorder>label</zorder>
-   <zorder>label_13</zorder>
-   <zorder>calendarWidget</zorder>
    <zorder>pushButton_2</zorder>
    <zorder>pushButton_3</zorder>
    <zorder>pushButton_4</zorder>
    <zorder>pushButton_5</zorder>
    <zorder>pushButton_6</zorder>
+   <zorder>widget_4</zorder>
+   <zorder>calendarWidget</zorder>
   </widget>
  </widget>
  <customwidgets>
