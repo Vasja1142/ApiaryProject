@@ -28,17 +28,24 @@ MainWindow::MainWindow(QWidget *parent)
         dates.push_back(0);
     }
 
+
+
+
     QString a = QDateTime::currentDateTime().toString("dd");
-    dates[0] = a.toInt() - 100;
+    //dates[0] = a.toInt() - 100;
 
 
 
 
 
-    for(int i = 1; i < 100 ;i++){
-        dates[i] = dates[0] + i;
+   // for(int i = 1; i < 100 ;i++){
+    //    dates[i] = dates[0] + i;
+  //  }
+    int sd = 0;
+    for(int i = 99; i>0; i--){
+        dates[i]=sd;
+        sd--;
     }
-
 
     diff(10);
 
